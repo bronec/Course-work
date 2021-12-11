@@ -1,0 +1,28 @@
+﻿@model IdentityRole
+
+@{
+    ViewBag.Title = "All Roles";
+}
+
+<h1>Удалить роль</h1>
+<p style="font-size: 24px;">Вы уверены, что хотите удалить эту роль?</p>
+<p style="font-size: 16px;">*Примечание: все пользователи потеряют свои первые ссылки, связанные с этой ролью.</p>
+
+<div class="card mb-3">
+    <div class="card-header">
+        Role Id : @Model.Id
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-danger" asp-action="ConfirmDeleteRole"
+           asp-controller="Administration" asp-route-id="@Model.Id">
+            Да
+        </a>
+        <a class="btn btn-primary" asp-action="ListRoles"
+           asp-controller="Administration">
+            Нет
+        </a>
+    </div>
+</div>

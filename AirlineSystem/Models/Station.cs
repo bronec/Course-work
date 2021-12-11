@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AirlineSystem.Models
+{
+    public class Station
+    {
+        public int ID { get; set; }
+
+        [Required]
+        [Display(Name = "Город")]
+        public string City { get; set; }
+        [Display(Name = "Имя")]
+        public string Name { get; set; }
+
+        [InverseProperty("PickUp")]
+        public virtual HashSet<Route> PickUpRoutes { get; set; } 
+
+        [InverseProperty("DropOff")]
+        public virtual HashSet<Route> DropOffRoutes { get; set; }
+
+        [NotMapped]
+        public string tostringProp { get => Name == null ? City : $"{City} ( {Name} )";} 
+
+
+        public override string ToString()
+        {
+            return Name==null? City: $"{City} ( {Name} )";
+        }
+    }
+}

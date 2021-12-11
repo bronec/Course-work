@@ -1,0 +1,39 @@
+﻿@model AirlineSystem.Models.Plane
+
+@{
+    ViewData["Title"] = "Delete Plane";
+}
+
+
+
+
+<h3>Вы уверены, что хотите удалить этот самолёт?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PlaneNum)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PlaneNum)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Capacity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Capacity)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Обратно к списку</a>
+    </form>
+</div>

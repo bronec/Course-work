@@ -1,0 +1,43 @@
+﻿    @using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+
+    <li class="nav-item">
+        
+        @if (string.IsNullOrEmpty(UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).ClientName))
+        {
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name </a>
+        }
+        else
+        {
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).ClientName</a>
+        }
+
+    </li>
+
+<li class="nav-item">
+        @*<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>*@
+        <a asp-controller="Home" asp-action="LogOut" class="nav-link btn btn-link text-dark">Выход</a>
+
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+    </li>
+}
+</ul>

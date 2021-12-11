@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@*<style>
+    
+</style>*@
+<link href="~/css/min/AllStyles.min.css" rel="stylesheet" />
+
+@section homepage{
+    
+    <section class="banner">
+        <div class="overlay"></div>
+        <div class="vid">
+            <video autoplay muted loop id="myVideo">
+                <source src="~/Videos/service-video-bg-n.webm" type="video/webm" />
+            </video>
+        </div>
+        <div class="banner-content">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Забронируй <span>С</span>ебе <span>Б</span>илет</h4>
+                    <form asp-action="Trips">
+
+                        <div class="form-group">
+                            <label class="control-label"> Откуда</label>
+                            <select name="fromId" class="form-control selectSearch" asp-items="ViewBag.Stations"></select>
+
+                            <label class="control-label"> Куда</label>
+                            <select name="toId" class="form-control selectSearch" asp-items="ViewBag.Stations"></select>
+                            <span id="stationError" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Дата отбытия</label>
+
+                            <input name="departureDate" type="date" class="form-control" required />
+
+                            <span id="DeptDateError" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label"> Пассажиры</label>
+                            <input name="passengers" type="number" class="form-control" required value="1" max="5" />
+
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Show Trips" class="btn btn-primary" />
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+
+
+@section Scripts {
+    <script src="~/js/HomePage.js"></script>
+}

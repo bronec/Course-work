@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AirlineSystem.Models.Trip>
+
+@{
+    ViewData["Title"] = "Trips";
+}
+
+<h1>Рейс</h1>
+
+<p>
+    @ViewBag.pickUp
+    <i class="fas fa-arrow-right"></i>
+    @ViewBag.dropoff
+
+</p>
+<p>
+    @ViewBag.departureDate.ToString("d")
+</p>
+<table id="dataTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Время отправления")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvailableSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plane)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.StartDateTime.ToString("t")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableSeatsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Plane.Category)
+            </td>
+            <td>
+                <a asp-action="TicketBooking" asp-route-tripID="@item.ID" asp-route-passengers="@ViewBag.Passengers" class="btn btn-dark">Выберите рейс</a> 
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

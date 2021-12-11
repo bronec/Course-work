@@ -1,0 +1,57 @@
+﻿@model AirlineSystem.Models.Ticket
+
+@{
+    ViewData["Title"] = "Delete Ticket";
+}
+<h3>Вы уверены, что хотите удалить этот билет?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PassengerCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PassengerCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookedSeats)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookedSeats)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Маршрут поездки")
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Trip.Route.PickUp
+            <i class="fas fa-arrow-right"></i>
+            @Model.Trip.Route.DropOff
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayName("Дата поездки")
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Trip.StartDateTime
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        @if (ViewBag.Date < DateTime.Now)
+        {
+            <span class="alert alert-warning">Этот билет нельзя удалить, «он устарел»!</span>
+        }
+        else
+        {
+            <input type="hidden" asp-for="ID" />
+            <input type="submit" value="Удалить" class="btn btn-danger" />
+        }
+        <a asp-action="Index" class="btn btn-secondary">Обратно к списку</a>
+    </form>
+</div>

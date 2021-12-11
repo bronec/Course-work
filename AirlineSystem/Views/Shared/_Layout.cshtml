@@ -1,0 +1,138 @@
+﻿﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AirlineSystem</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/img/ByAirline.png" rel="icon"/>
+
+    @*<link href="~/css/clientHomePage.css" rel="stylesheet" />*@
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/LogoStyle.css" type="text/css">
+    <link rel="stylesheet" href="~/css/FootStyle.css" type="text/css">
+    <link rel="stylesheet" href="~/css/HeadStyles.css" type="text/css">*@
+    <link href="~/css/min/AllStyles.min.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="ALogo"><img src="~/img/ByAirline.png" class="ByLogo"/></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-2">
+                        @if (@User.IsInRole("Employee") || @User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Plane" asp-action="Index">Самолёты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Stations" asp-action="Index">Аэропорты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Trips" asp-action="Index">Рейсы</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">Билеты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Routes" asp-action="Index">Маршруты</a>
+                            </li>
+                            @if (@User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="ListRoles">Управление ролями</a>
+                                </li>
+                            }
+                        }
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserTickets">Мои билеты</a>
+                            </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+        <div class="ByHead"></div>
+        <div class="FreeNav">
+            <a asp-area="" asp-controller="Home" asp-action="About" class="About">О нас</a>
+            <a asp-area="" asp-controller="Home" asp-action="FAQ" class="FAQ">FAQ</a>
+            <a asp-area="" asp-controller="Home" asp-action="Contacts" class="Cont">Контакты</a>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    @await RenderSectionAsync("homepage", required: false)
+    <div class="ByFoot">
+        <table style="width: 100%; border-top: 40px solid black;">
+            <tr class="ByBorder">
+                <td class="ByRight" style="width: 25%">
+                    <img src="~/img/ByAirlineF.png" class="ByFootLogo" />
+                </td>
+                <td class="ByLeft" style="width: 75%">
+                    <p class="ByByFoot">
+                        ByAirline
+                    </p>
+                </td>
+            </tr>
+            <tr class="ByBorder">
+                <td colspan="2">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="ByLinks" style="padding-left: 40px;">Главная</a>
+                    <a asp-area="" asp-controller="Home" asp-action="About" class="ByLinks">О нас</a>
+                    <a asp-area="" asp-controller="Home" asp-action="FAQ" class="ByLinks">FAQ</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Contacts" class="ByLinks">Контакты</a>
+                </td>
+            </tr>
+            <tr class="ByBorder">
+                <td colspan="2" class="ByRight">
+                    <img src="~/img/Social.png" class="BySocial" style="padding-right: 15px;"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <footer class="border-top footer text-muted" style="background-color: black;">
+        <div class="container">
+            &copy; @DateTime.Now.Year - AirlineSystem - Copyright <span>Bronec</span> ©
+            <script>document.write(new Date().getFullYear());</script> All rights reserved
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/lib/datatables.net/jquery.dataTables.js"></script>
+
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false,
+                }]
+
+            });
+        });
+    </script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

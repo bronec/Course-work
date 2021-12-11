@@ -1,0 +1,149 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+<div class="container" style="min-height: 500px;">
+    <div class="row">
+        <div class="col-12">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <h4>Создать новый аккаунт.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <label asp-for="Input.ClientName">Имя</label>
+                            </div>
+                            <div class="col-12 col-sm-10">
+                                <input asp-for="Input.ClientName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span asp-validation-for="Input.ClientName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <label asp-for="Input.Email">Почта</label>
+                            </div>
+                            <div class="col-12 col-sm-10">
+                                <input asp-for="Input.Email" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <label asp-for="Input.Phone">Телефон</label>
+                            </div>
+                            <div class="col-12 col-sm-10">
+                                <input asp-for="Input.Phone" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <label asp-for="Input.Password">Пароль</label>
+                            </div>
+                            <div class="col-12 col-sm-10">
+                                <input asp-for="Input.Password" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <label asp-for="Input.ConfirmPassword">Повторить пароль</label>
+                            </div>
+                            <div class="col-12 col-sm-10">
+                                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Регистрация</button>
+            </form>
+        </div>
+        <div class="d-block d-md-none">
+            <br />
+        </div>
+        <div class="col-12 col-md-6">
+            <h4>Воспользуйтесь другим сервисом для регистрации.</h4>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            Не настроены внешние службы аутентификации. Посмотрите<a href="https://go.microsoft.com/fwlink/?LinkID=532715">эту статью</a>
+                            для получения дополнительных сведений о настройке этого приложения ASP.NET для поддержки входа в систему через внешние службы.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Войдите, используя свой @provider.DisplayName аккаунт">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
